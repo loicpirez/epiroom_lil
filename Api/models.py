@@ -23,8 +23,8 @@ class Room(models.Model):
         return self.name + (" | Show" if self.show else "") + (" | Bookable" if self.bookable else "")
 
 class Booking(models.Model):
-    room = models.ForeignKey('Room')
-    user = models.ForeignKey('User', blank=True, null=True)
+    room = models.ForeignKey('Room', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', blank=True, null=True, on_delete=models.CASCADE)
     description = models.CharField(max_length=128, blank=True, null=True)
     start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField(default=timezone.now)
