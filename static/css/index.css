@@ -1,0 +1,86 @@
+body {
+  background: #263238;
+}
+
+.to-front {
+  z-index: 100;
+}
+
+.fixed {
+  position: fixed;
+}
+
+#reload {
+  display: none;
+  position: fixed;
+  bottom: 5px; left: 5px;
+  font-size: 20px;
+  opacity: 0.5;
+}
+
+#hour {
+  bottom: 20px;
+  width: 300px;
+  font-size: 55px;
+  text-align: center;
+  left: calc(50% - 150px);
+  font-weight: 600;
+  color: #fff;
+}
+
+svg {
+  margin-left: 10%;
+  width: 80%;
+  height: 95%;
+}
+
+#svg {
+  heightà: 100vh;
+}
+
+.side_col :not(.hidden-md){
+  max-height: 100%;
+}
+
+.bg-busy {
+  background: #e74c3c;
+}
+
+.bg-warning {
+  background: #ffb300!important;
+}
+
+.bg-free {
+  background: #27ae60;
+}
+
+.col1, .col2 {
+  margin-top: 20px
+}
+
+.card .card-header {
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: 600;
+}
+
+.card .card-body {
+  padding: 15px;
+  font-size: 14px;
+}
+
+.card .card-text {
+  margin-bottom: 5px;
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
+.text-right {
+  position: absolute;
+  right: 20px;
+  font-size: 14px;
+  line-height: 25px;
+  font-weight: 500;
+}
