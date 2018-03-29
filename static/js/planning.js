@@ -53,12 +53,11 @@ var api_request = function() {
     $('.col1').html("")
     $('.col2').html("")
     $('#svg svg path').css('fill', 'none')
-    rooms.forEach(function(key) {
+    for (key in rooms)
       setRoom(data, key, rooms[key] ? rooms[key].taken : 0)
-    }
     $('#reload').css('display', "none")
   })
 }
 
-window.setInterval(api_request, 10000)
+window.setInterval(api_request, 1000)
 api_request()
