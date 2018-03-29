@@ -7,14 +7,17 @@ import json
 
 import os
 
+from django.db import transaction
+
+@transaction.atomic
 def index(req):
     now = datetime.now()
     path = os.getcwd()
     nb_room = Room.objects.filter(show=True).count()
-    #try:
-    svg_path = GlobalVar.objects.get(name="SVG_path")
-    #except:
-    #    return HttpResponse("Please Try Later")
+    try:
+        svg_path = GlobalVar.objects.get(name="SVG_path")
+    except:
+        return HttpResponse("Please Try Later")
     with open(svg_path.value) as svg_file:
         next(svg_file)
         svg = svg_file.read()

@@ -6,7 +6,9 @@ import json
 
 from .models import *
 
-# Create your views here.
+from django.db import transaction
+
+@transaction.atomic
 def rooms(req, room=None):
     if not room:
         rooms = Room.objects.all()
@@ -17,6 +19,7 @@ def rooms(req, room=None):
             rooms = Room.objects.filter(name__iexact=room)
     return JsonResponse(list(rooms.values('id', 'name', 'show', 'bookable', 'svg_ids')), safe=False)
 
+@transaction.atomic
 def users(req, user=None):
     if not user:
         users = User.objects.all()
@@ -30,6 +33,7 @@ def users(req, user=None):
             return JsonResponse({}, safe=False)
         return JsonResponse(list(users.values('id', 'name', 'email', 'access_token', 'token_id', 'last_login'))[0], safe=False)
 
+@transaction.atomic
 def bookings(req, id=None):
     if not id:
         bookings = Booking.objects.all()
@@ -38,6 +42,7 @@ def bookings(req, id=None):
         bookings = Booking.objects.filter(id=id)
         return JsonResponse(list(bookings.values('id', 'room__svg_ids', 'user', 'start', 'end'))[0], safe=False)
 
+@transaction.atomic
 def get_dic_value(dic, item):
     if not dic:
         return 0
@@ -45,6 +50,7 @@ def get_dic_value(dic, item):
 
 from django.views.decorators.cache import cache_page
 
+@transaction.atomic
 @cache_page(0.5)
 def dispo(req, room=None):
     now = timezone.now()

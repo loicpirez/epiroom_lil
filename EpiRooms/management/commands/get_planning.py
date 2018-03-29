@@ -6,7 +6,10 @@ import requests, json
 from Api.models import Booking, Room
 from EpiRooms.models import Log, GlobalVar
 
+from django.db import transaction
+
 class Command(BaseCommand):
+    @transaction.atomic
     def handle(self, *args, **options):
         r = requests.get('https://intra.epitech.eu/auth-d73b3db1c918b7826c565155d5e65388a2d0f938/planning/load?format=json')
         planning = r.json()
