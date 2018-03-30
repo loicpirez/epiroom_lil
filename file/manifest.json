@@ -1,6 +1,9 @@
 {
   "short_name": "EpiRooms",
   "name": "EpiRooms",
+  "background_color": "#2196F3",
+  "display": "standalone",
+  "orientation": "landscape",
   "icons": [
     {
       "src": "icon.png",
