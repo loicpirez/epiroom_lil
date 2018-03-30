@@ -10,6 +10,14 @@ body {
   position: fixed;
 }
 
+.card .card-body {
+  overflow: hidden;
+  position: absolute;
+  height: 65%;
+  top: 35%;
+  width: 100%;
+}
+
 #reload {
   display: none;
   position: fixed;
