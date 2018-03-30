@@ -89,6 +89,8 @@ window.setTimeout(function() {
     refresh_time($("#hour"), 1)
     $(".card-box .card-body .time").each(function(id) {
       refresh_time($(".card-box .card-body .time").eq(id), -1)
+      if ($(".card-box .card-body .time").eq(id) == "00:00:00")
+        api_request()
     })
   }, 1000)
 }, 1000)
