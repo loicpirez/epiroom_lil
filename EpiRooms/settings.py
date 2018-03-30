@@ -25,7 +25,7 @@ SECRET_KEY = 'qf%47a8eud9_$ne*ytg1^&yd(zy_ya(x9y#$p8$jmre_e+g!t*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'https://gberdeaux.alwaysdata.net/']
 
 
 # Application definition
