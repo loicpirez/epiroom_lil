@@ -78,7 +78,7 @@ def dispo(req, room=None):
             if Room.objects.filter(name__icontains=r, show=True).count():
                 if not r in ret:
                     ret[r] = None
-                tomorrow = datetime(year=now.year, month=now.month, day=now.day + 1)
+                tomorrow = datetime(year=now.year, month=now.month, day=now.day) + timedelta(days=1)
                 acti = Booking.objects.filter(room__svg_ids__icontains=r, end__gt=now, start__lt=tomorrow, room__show=True).order_by('start')
                 if acti:
                     taken = 1 if now >= acti[0].start else 0
