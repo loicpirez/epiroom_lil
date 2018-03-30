@@ -4,9 +4,10 @@
 *.pyc
 __pycache__/
 local_settings.py
-
+1;5003;0c
 ### Linux ###
 *~
+\#*#
 
 ### Python ###
 *.py[cod]
