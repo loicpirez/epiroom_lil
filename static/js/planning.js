@@ -11,6 +11,8 @@ var createCard = function(data, room) {
   all_day = rooms[room] == undefined
   taken = (!rooms[room]) ? 0 : rooms[room]['taken']
   acti = (!rooms[room]) ? "Libre" : rooms[room]["course"]["description"]
+  if (acti == null)
+    acti = rooms[room]["course"]["user__name"]
   state = (taken == 0.1) ? "free" : taken_col[taken * 2]
   percent = (!rooms[room]) ? 100 : rooms[room]['percent']
   let intl = new Intl.NumberFormat("arab", {minimumIntegerDigits: 2});
@@ -83,14 +85,15 @@ var api_request = function() {
   })
 }
 
-window.setInterval(api_request, 60000)
+window.setInterval(api_request, 30 * 60 * 1000)
 window.setTimeout(function() {
   window.setInterval(function() {
     refresh_time($("#hour"), 1)
     $(".card-box .card-body .time").each(function(id) {
-      refresh_time($(".card-box .card-body .time").eq(id), -1)
       if ($(".card-box .card-body .time").eq(id).html() == "00:00:00")
         api_request()
+      else
+        refresh_time($(".card-box .card-body .time").eq(id), -1)
     })
   }, 1000)
 }, 1000)
