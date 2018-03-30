@@ -42,13 +42,29 @@ def bookings(req, id=None):
         bookings = Booking.objects.filter(id=id)
         return JsonResponse(list(bookings.values('id', 'room__svg_ids', 'user', 'start', 'end'))[0], safe=False)
 
-@transaction.atomic
 def get_dic_value(dic, item):
     if not dic:
         return 0
-    return dic[item]
+    try:
+        return dic[item]
+    except:
+        return 0
 
 from django.views.decorators.cache import cache_page
+
+def calc_endRoomUse(room, acti, taken, now):
+    tomorrow = datetime(year=now.year, month=now.month, day=now.day + 1)
+    evts = Booking.objects.filter(room=room, start__gt=now, end__lt=tomorrow)
+    end_time = 0
+    start_time = 0
+    name = ""
+    for evt in range(evts.count() - 1):
+        if evts[evt].end > evts[evt + 1].start:
+            break
+        end_time = evts[evt + 1].end
+    if end_time:
+        return end_time
+    return  acti.end if taken == 1 else acti.start - timedelta(hours=1)
 
 @transaction.atomic
 @cache_page(0.5)
@@ -59,28 +75,30 @@ def dispo(req, room=None):
     for room in rooms:
         svg_room = room.svg_ids.split(';')
         for r in svg_room:
-            if not r in ret:
-                ret[r] = None
-            tomorrow = datetime(year=now.year, month=now.month, day=now.day + 1)
-            acti = Booking.objects.filter(room__svg_ids__icontains=r, end__gt=now, start__lt=tomorrow).order_by('start')
-            if acti:
-                taken = 1 if now >= acti[0].start else 0
-                if not taken:
-                    taken = 0.5 if now + timedelta(hours=1) >= acti[0].start else 0
+            if Room.objects.filter(name__icontains=r, show=True).count():
+                if not r in ret:
+                    ret[r] = None
+                tomorrow = datetime(year=now.year, month=now.month, day=now.day + 1)
+                acti = Booking.objects.filter(room__svg_ids__icontains=r, end__gt=now, start__lt=tomorrow, room__show=True).order_by('start')
                 if acti:
-                    time = acti[0].end - now if taken == 1 else acti[0].start - now
-                    end_time = acti[0].end if taken == 1 else acti[0].start - timedelta(hours=1)
-                    percent = int(time.total_seconds() / 60) / 60 * 100
-                    if taken == 1:
-                        percent = 100 - int(time.total_seconds() / (acti[0].end.timestamp() - acti[0].start.timestamp()) * 100)
-                    elif taken == 0.5:
-                        percent = int(time.total_seconds() / 60) / 60 * 100
-                    ret[r] = {
-                        'taken': taken,
-                        'time': str(time),
-                        'course': list(acti.values('id', 'user', 'description', 'start', 'end'))[0],
-                        'percent': percent
-                    }
+                    taken = 1 if now >= acti[0].start else 0
+                    taken = taken if now + timedelta(hours=1) >= acti[0].start else 0.1
+                    if not taken:
+                        taken = 0.5 if now + timedelta(hours=1) >= acti[0].start else 0
+                    if acti:
+                        time = acti[0].end - now if taken == 1 else acti[0].start - now
+                        end_time = calc_endRoomUse(room, acti[0], taken, now)
+                        percent = 100
+                        if taken == 1:
+                            percent = 100 - int(time.total_seconds() / (acti[0].end.timestamp() - acti[0].start.timestamp()) * 100)
+                        elif taken == 0.5:
+                            percent = int(time.total_seconds() / 60) / 60 * 100
+                        ret[r] = {
+                            'taken': taken,
+                            'time': str(time),
+                            'course': list(acti.values('id', 'user', 'description', 'start', 'end'))[0],
+                            'percent': percent
+                        }
     sorted_room = sorted(ret, key=lambda d:get_dic_value(ret[d], 'taken'), reverse=False)
     rooms = {}
     for room in sorted_room:
