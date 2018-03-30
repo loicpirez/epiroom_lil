@@ -13,7 +13,12 @@ from django.db import transaction
 def index(req):
     now = datetime.now()
     path = os.getcwd()
-    nb_room = Room.objects.filter(show=True).count()
+    nb_room = []
+    for room in Room.objects.filter():
+        for svg_id in room.svg_ids.split(';'):
+            if svg_id not in nb_room and Room.objects.filter(name__icontains=svg_id, show=True):
+                nb_room.append(svg_id)
+    nb_room = len(nb_room)
     try:
         svg_path = GlobalVar.objects.get(name="SVG_path")
     except:
