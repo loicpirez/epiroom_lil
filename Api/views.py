@@ -67,7 +67,7 @@ def calc_endRoomUse(room, acti, taken, now):
     return  acti.end if taken == 1 else acti.start - timedelta(hours=1)
 
 @transaction.atomic
-@cache_page(0.5)
+@cache_page(1)
 def dispo(req, room=None):
     now = timezone.now()
     rooms = Room.objects.filter(show=True)
