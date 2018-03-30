@@ -1,11 +1,17 @@
 {
   "short_name": "EpiRooms",
   "name": "EpiRooms",
-  "start_url": "/",
   "icons": [
     {
       "src": "icon.png",
       "type": "image/png",
       "sizes": "48x48"
-    }]
+    },
+    {
+      "src": "icon_144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    }
+  ],
+  "start_url": "/"
 }
