@@ -16,6 +16,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="apple-touch-icon" href="{% static 'img/icon.png' %}" />
     <link rel="apple-touch-startup-image" href="splash_screen.png" />
+    <link rel="manifest" href="{% static 'manifest.json'%}">
     <style>
       .card-box {
         height: calc((100vh - 20px) / ({{ nb_room }} / 2));
