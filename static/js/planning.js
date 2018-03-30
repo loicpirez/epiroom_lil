@@ -1,3 +1,4 @@
+
 String.prototype.toTitleCase = function () {
   return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
@@ -10,7 +11,7 @@ var createCard = function(data, room) {
   all_day = rooms[room] == undefined
   taken = (!rooms[room]) ? 0 : rooms[room]['taken']
   acti = (!rooms[room]) ? "Libre" : rooms[room]["course"]["description"]
-  state = taken_col[taken * 2]
+  state = (taken == 0.1) ? "free" : taken_col[taken * 2]
   percent = (!rooms[room]) ? 100 : rooms[room]['percent']
   let intl = new Intl.NumberFormat("arab", {minimumIntegerDigits: 2});
   time = (!rooms[room]) ? "Toute la journée" : rooms[room]["time"].split('.')[0]
