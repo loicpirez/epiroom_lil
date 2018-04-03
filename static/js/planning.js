@@ -41,7 +41,7 @@ var createCard = function(data, room) {
                 </div>\
               </div>\
             </div>")
-  col = parseInt(card_id / (max_room_col + 1)) + 1
+  col = parseInt(card_id / (parseInt(max_room_col) + 1)) + 1
   card_id += 1
   $(".col" + col).append(card)
 }
@@ -51,6 +51,8 @@ var setRoom = function(data, room, taken) {
   var date = null
   fill_color = ["#27ae60", "#ffb300", "#e74c3c"]
   createCard(data, room)
+  if (taken == 0.1)
+    taken = 0
   $('#svg svg #' + room).css('fill', fill_color[taken * 2])
 }
 

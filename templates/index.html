@@ -15,10 +15,10 @@
     <link rel="manifest" href="file/manifest.json">
     <style>
       .card-box {
-        height: calc((100vh - 20px) / ({{ nb_room }} / 2));
+        height: calc((100vh - 20px) / {{ max_col }});
       }
       .card {
-        height: calc((100vh - 20px) / ({{ nb_room }} / 2) - 20px);
+        height: calc((100vh - 20px) / {{ max_col }} - 20px);
       }
     </style>
     <script type="text/javascript">

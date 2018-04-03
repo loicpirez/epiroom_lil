@@ -19,6 +19,7 @@ def index(req):
             if svg_id not in nb_room and Room.objects.filter(name__icontains=svg_id, show=True):
                 nb_room.append(svg_id)
     nb_room = len(nb_room)
+    max_col = int(nb_room / 2)
     try:
         svg_path = GlobalVar.objects.get(name="SVG_path")
     except:
