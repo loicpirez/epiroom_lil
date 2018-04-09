@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin | EpiRooms</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{% static 'Admin/bootstrap/dist/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'Admin/font-awesome/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" href="{% static 'Admin/Ionicons/css/ionicons.min.css'%}">
+    <link rel="stylesheet" href="{% static 'Admin/css/AdminLTE.min.css'%}">
+    <link rel="stylesheet" href="{% static 'Admin/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'%}">
+    <link rel="stylesheet" href="{% static 'Admin/fullcalendar/dist/fullcalendar.min.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="{% static 'Admin/css/skins/'%}skin-{{theme}}.min.css">
+    <style media="screen">
+      .popover {
+        width: 200px;
+        max-width: 150%;
+      }
+      .popover-content {
+        font-size: 10px;
+        padding: 4px;
+      }
+      .popover-title {
+        font-size: 12px;
+        padding: 4px 8px;
+        font-weight: 600;
+      }
+      .fc-time-grid-event.fc-v-event.fc-event.fc-start.fc-end {
+        border: 0.1px solid #fff!important;
+      }
+    </style>
+  </head>
+  <body class="hold-transition skin-{{ theme }} sidebar-mini">
+    <div class="wrapper">
+      {% block header %}{% include 'Admin/header.html' %}{% endblock %}
+      {% block sidebar %}{% include 'Admin/sidebar.html' %}{% endblock %}
+      {% block content %}{% endblock %}
+      {% block footer %}{% include 'Admin/footer.html' %}{% endblock %}
+    </div>
+    <script src="{% static 'Admin/jquery/dist/jquery.min.js'%}"></script>
+    <script src="{% static 'Admin/bootstrap/dist/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'Admin/moment/min/moment.min.js'%}"></script>
+    <script src="{% static 'Admin/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'Admin/fullcalendar/dist/fullcalendar.min.js'%}"></script>
+    <script src="{% static 'Admin/js/adminlte.min.js'%}"></script>
+  </body>
+</html>

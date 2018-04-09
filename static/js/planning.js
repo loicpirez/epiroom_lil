@@ -11,7 +11,7 @@ var createCard = function(data, room) {
   all_day = rooms[room] == undefined
   taken = (!rooms[room]) ? 0 : rooms[room]['taken']
   acti = (!rooms[room]) ? "Libre" : rooms[room]["course"]["description"]
-  if (acti == null)
+  if (!acti || acti == "")
     acti = rooms[room]["course"]["user__name"]
   state = (taken == 0.1) ? "free" : taken_col[taken * 2]
   percent = (!rooms[room]) ? 100 : rooms[room]['percent']

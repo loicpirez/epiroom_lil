@@ -13,8 +13,8 @@ body {
 .card .card-body {
   overflow: hidden;
   position: absolute;
-  height: 65%;
-  top: 35%;
+  height: 70%;
+  top: 30%;
   width: 100%;
 }
 

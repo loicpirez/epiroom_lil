@@ -1,0 +1,62 @@
+{% extends "Admin/squelette.html" %}
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1><i class="fa fa-calendar"></i> Planning</h1>
+    <ol class="breadcrumb">
+      <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li class="active">Planning</li>
+    </ol>
+  </section>
+  <section class="content container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-danger">
+          <div class="box-body">
+            <div id="calendar"></div>
+          </div>
+        </div>
+    </div>
+  </div>
+    <script type="text/javascript">
+      window.onload = function() {
+        $('#calendar').fullCalendar({
+          locale: 'fr',
+          defaultView: 'agendaWeek',
+          themeSyste: 'bootstrap4',
+          nowIndicator: true,
+          titleFormat: 'D MMMM YYYY',
+          header: {
+            left: 'today',
+            center: 'title',
+            right: 'prev, agendaDay, agendaWeek, next'
+          },
+          events: {{ events | safe }},
+          allDaySlot: false,
+          monthNames: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+          buttonText: {today: 'Aujourd\'hui', week: 'Semaine', day: 'Jour'},
+          firstDay: 1,
+          slotLabelFormat:"HH:mm",
+          timeFormat: 'H:mm',
+          minTime: "07:00:00",
+          maxTime: "22:00:00",
+          height: 754,
+          validRange: {
+            start: "{{ start }}",
+            end: "{{ end }}"
+          },
+          eventAfterRender: function(event, element) {
+            $(element).popover({
+              title: event.room,
+              content: event.description,
+              placement: 'auto top',
+              trigger: 'hover',
+              delay: {"hide": 100}
+            });
+          },
+        });
+      }
+    </script>
+  </section>
+</div>
+{% endblock %}
