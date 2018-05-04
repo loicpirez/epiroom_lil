@@ -22,5 +22,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^api/', include('Api.urls')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^superadmin/', admin.site.urls),
+    url(r'^admin/', include('Admin.urls')),
 ] + static(settings.FILE_URL, document_root=settings.FILE_ROOT)

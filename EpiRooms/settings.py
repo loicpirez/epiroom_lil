@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'EpiRooms',
     'Api',
+    'Admin',
 ]
 
 MIDDLEWARE = [
@@ -115,9 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
-TIME_ZONE = 'CET'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 

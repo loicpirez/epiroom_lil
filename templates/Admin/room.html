@@ -1,0 +1,131 @@
+{% extends "Admin/squelette.html" %}
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1><i class="fa fa-sitemap"></i> Reserver [{{room.name }}]</h1>
+    <ol class="breadcrumb">
+      <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li><i class="fa fa-sitemap"></i> Reserver</li>
+      <li class="active">{{ room.name }}</li>
+    </ol>
+  </section>
+  <section class="content container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-danger">
+          <div class="box-body">
+            <div id="calendar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Booking" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Reservation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="start_date">À partir de</label>
+                  <div class="input-group">
+                    <input type="text" name="start_date" class="form-control" disabled>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="end_date">Jusqu'à</label>
+                  <div class="input-group">
+                    <input type="text" name="end_date", class="form-control" disabled>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var haveEvent
+      window.onload = function(start, end) {
+        haveEvent = function(start, end) {
+          events = $("#calendar").fullCalendar('getEventSources')[0]['rawEventDefs']
+          for (evt in events) {
+            if ((new Date(events[evt]['start']) <= start && new Date(events[evt]['end']) > start) ||
+                (new Date(events[evt]['start']) <= end && new Date(events[evt]['end']) > end) ||
+                (new Date(events[evt]['start']) >= start && new Date(events[evt]['end']) < end))
+                return 1
+          }
+          return 0
+        }
+        $('#calendar').fullCalendar({
+          locale: 'fr',
+          defaultView: 'agendaWeek',
+          themeSyste: 'bootstrap4',
+          nowIndicator: true,
+          titleFormat: 'D MMMM YYYY',
+          header: {
+            left: 'today',
+            center: 'title',
+            right: 'prev, agendaDay, agendaWeek, next'
+          },
+          selectable: true,
+          events: {{ events | safe }},
+          allDaySlot: false,
+          monthNames: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+          dayNames: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+          buttonText: {today: 'Aujourd\'hui', week: 'Semaine', day: 'Jour'},
+          firstDay: 1,
+          slotLabelFormat:"HH:mm",
+          timeFormat: 'H:mm',
+          minTime: "07:00:00",
+          maxTime: "22:00:00",
+          height: 754,
+          validRange: {
+            start: "{{ start }}",
+            end: "{{ end }}"
+          },
+          eventOverlap: false,
+          select: function (start, end, jsEvent, view) {
+            start = new Date(start)
+            start.setHours(start.getHours() - 2)
+            end = new Date(end)
+            end.setHours(end.getHours() - 2)
+            if (new Date(start) < new Date() || end - start > 7200000 || haveEvent(start, end)) {
+              $("#calendar").fullCalendar("unselect");
+              return;
+            }
+            days = this['options']['dayNames']
+            day = parseInt(moment(start).format('d')) - 1
+            $("#Booking").modal("show")
+            $("#Booking input[name='start_date']").val(days[day] + moment(start).format(' DD/MM/YYYY hh:mm'))
+            $("#Booking input[name='end_date']").val(days[day] + moment(end).format(' DD/MM/YYYY hh:mm'))
+            $("#calendar").fullCalendar("unselect");
+          },
+          eventAfterRender: function(event, element) {
+            $(element).popover({
+              title: event.room,
+              content: event.description,
+              placement: 'auto top',
+              trigger: 'hover',
+              delay: {"hide": 100}
+            });
+          }
+        });
+      }
+    </script>
+  </section>
+</div>
+{% endblock %}

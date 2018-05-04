@@ -1,0 +1,30 @@
+{% extends "Admin/squelette.html" %}
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1><i class="fa fa-calendar"></i> Logs</h1>
+    <ol class="breadcrumb">
+      <li><a href="/admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li class="active">Logs</li>
+    </ol>
+  </section>
+  <section class="content container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-danger">
+          <div class="box-body">
+            <div class="form-group"><textarea class="form-control" rows="25"></textarea></div>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" placeholder="Enter commands...">
+              <span class="input-group-btn"><button type="button" class="btn btn-danger btn-flat">Go!</button></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript">
+    console.log("{% csrf_token %}")
+  </script>
+</div>
+{% endblock %}

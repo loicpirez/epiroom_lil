@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin | EpiRooms</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="{% static 'Admin/bootstrap/dist/css/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'Admin/font-awesome/css/font-awesome.min.css'%}">
+  <link rel="stylesheet" href="{% static 'Admin/Ionicons/css/ionicons.min.css'%}">
+  <link rel="stylesheet" href="{% static 'Admin/css/AdminLTE.min.css'%}">
+  <link rel="stylesheet" href="{% static 'Admin/css/skins/'%}skin-{{theme}}.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition skin-{{ theme }} sidebar-mini">
+<div class="wrapper">
+  <header class="main-header">
+    <a href="index2.html" class="logo">
+      <span class="logo-mini"><b>Epi</b>R</span>
+      <span class="logo-lg"><b>Epi</b>Room</span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="/file/img/gberdeaux.png" class="user-image" alt="User Image">
+              <span class="hidden-xs">Guillaume Berdeaux</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="user-header">
+                <img src="/file/img/gberdeaux.png" class="img-circle" alt="User Image">
+                <p>
+                  Guillaume Berdeaux - Developer
+                  <small>Member since Mars. 2018</small>
+                </p>
+              </li>
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+              </li>
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/file/img/gberdeaux.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>Guillaume Berdeaux</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+        </div>
+      </form>
+      <ul class="sidebar-menu" data-widget="tree">
+      <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li class="header">Planning</li>
+        <li><a href="#"><i class="fa fa-list"></i> <span>Planning</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-sitemap"></i> <span>Salles</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+          </a>
+          <ul class="treeview-menu">
+            {% for room in rooms %}
+            <li><a href="#"><i class="fa fa-circle text-{{ room.state }}"></i> {{ room.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="header">Utilisateurs</li>
+        <li><a href="#"><i class="fa fa-list"></i> <span>Liste des utilisateurs</span></a></li>
+        <li class="header">Serveur</li>
+        <li><a href="#"><i class="fa fa-archive"></i> <span>Logs</span></a></li>
+        <li><a href="#"><i class="fa fa-terminal"></i> <span>Console</span></a></li>
+      </ul>
+    </section>
+  </aside>
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
+      <ol class="breadcrumb">
+        <li class="active">Dashboard</li>
+      </ol>
+    </section>
+    <section class="content container-fluid">
+    </section>
+  </div>
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">EpiRooms</div>
+    <strong>Copyright &copy; 2018 <a href="http://gberdeaux.xyz">Guillaume Berdeaux</a>.</strong> All rights reserved.
+  </footer>
+</div>
+<script src="{% static 'Admin/jquery/dist/jquery.min.js'%}"></script>
+<script src="{% static 'Admin/bootstrap/dist/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'Admin/js/adminlte.min.js'%}"></script>
+</body>
+</html>
