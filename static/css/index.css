@@ -43,7 +43,7 @@ svg {
 }
 
 #svg {
-  heightà: 100vh;
+  height: 100vh;
 }
 
 .side_col :not(.hidden-md){

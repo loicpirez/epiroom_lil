@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db.models import Q
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import json
 
 from .models import *
@@ -53,7 +53,7 @@ def get_dic_value(dic, item):
 from django.views.decorators.cache import cache_page
 
 def calc_endRoomUse(room, acti, taken, now):
-    tomorrow = datetime(year=now.year, month=now.month, day=now.day + 1)
+    tomorrow = datetime(year=now.year, month=now.month, day=now.day) + timedelta(days=1)
     evts = Booking.objects.filter(room=room, start__gt=now, end__lt=tomorrow)
     end_time = 0
     start_time = 0

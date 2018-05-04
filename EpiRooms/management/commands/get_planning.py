@@ -35,3 +35,4 @@ class Command(BaseCommand):
                     Booking(room=room, description=evt["acti_title"], start=datetime.strptime(evt["start"], "%Y-%m-%d %H:%M:%S"), end=datetime.strptime(evt["end"], "%Y-%m-%d %H:%M:%S")).save()
                 except:
                     Log(level=2, log_from="Get Planning - save Event", log_message="Event error for event:\n" + json.dumps(evt, indent=4, separators=(',', ': '))).save()
+        Log(level=0, log_from="Get Planning", log_message="Planning refresh done").save()

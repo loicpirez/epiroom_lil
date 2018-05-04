@@ -5,6 +5,12 @@ String.prototype.toTitleCase = function () {
 
 let card_id = 1
 
+var alwaysfree = function(time) {
+    if (time == "<div class='text-center'>Toute la journée</div>")
+	return 1
+    return 0
+}
+
 var createCard = function(data, room) {
   rooms = data['rooms']
   taken_col = ["free", "warning", "busy"]
@@ -23,21 +29,21 @@ var createCard = function(data, room) {
     dt.setHours(time_s[0])
     dt.setMinutes(time_s[1])
     dt.setSeconds(time_s[2])
-    inc = 1
+    inc = -1
     if (taken >= 0.5)
       inc = -1
     time = `${intl.format(dt.getHours())}:${intl.format(dt.getMinutes())}:${intl.format(dt.getSeconds() + 1)}`
     time = "<div inc='" + inc + "' class='time text-center'>" + time + "</div>"
   } else
-    time = "<div class='text-center'>Toute la journée</div>"
+      time = "<div class='text-center'>Toute la journée</div>"
   card = $("<div class='col-12 card-box'>\
               <div class='card text-white bg-" + state + "'>\
                 <div class='card-header'><b style='display: inline-block; width: 80%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>" + room.toTitleCase() + "</b></div>\
                 <div class='card-body'>\
-                  <b style='text-align: center; display: inline-block; width: 100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>" + acti.toTitleCase() + "</b>\
-                  <div class='progress' style='margin-bottom: 5px; background: none; border: 1px solid #fff; height: 10px'>\
+                  <b style='text-align: center; display: inline-block; width: 100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>" + acti.toTitleCase() + "</b>" + 
+    	            (alwaysfree(time) ? "" : "<div class='progress' style='margin-bottom: 5px; background: none; border: 1px solid #fff; height: 10px'>\
                     <div class='progress-bar' style='width: " + percent + "%; background: #fff'></div>\
-                  </div>" + time + "\
+</div>") + time + "\
                 </div>\
               </div>\
             </div>")
@@ -87,7 +93,6 @@ var api_request = function() {
   })
 }
 
-window.setInterval(api_request, 30 * 60 * 1000)
 window.setTimeout(function() {
   window.setInterval(function() {
     refresh_time($("#hour"), 1)

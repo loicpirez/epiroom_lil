@@ -13,12 +13,27 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <link rel="icon" type="image/png" href="{% static 'img/icon.png'%}" />
     <link rel="manifest" href="file/manifest.json">
+    {% if refresh %}<meta http-equiv="refresh" content="{{ refresh }}">{% endif %}
     <style>
+      .card .card-body {
+        font-size: 23px!important;
+        margin-top: -10px;
+      }
       .card-box {
         height: calc((100vh - 20px) / {{ max_col }});
       }
       .card {
         height: calc((100vh - 20px) / {{ max_col }} - 20px);
+      }
+      #svg svg {
+        transform: rotate(90deg);
+      }
+      .card-header {
+        padding: .75rem 1.25rem 0.2rem;
+      }
+      .card-header b {
+        font-size: 17px;
+        line-height: 20px;
       }
     </style>
     <script type="text/javascript">

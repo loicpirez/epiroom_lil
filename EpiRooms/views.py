@@ -11,6 +11,7 @@ from django.db import transaction
 
 @transaction.atomic
 def index(req):
+    refresh = int(GlobalVar.objects.get(name="auto_refresh").value)
     now = datetime.now()
     path = os.getcwd()
     nb_room = []
