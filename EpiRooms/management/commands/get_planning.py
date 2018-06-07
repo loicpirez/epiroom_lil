@@ -11,7 +11,7 @@ from django.db import transaction
 class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
-        r = requests.get('https://intra.epitech.eu/auth-d73b3db1c918b7826c565155d5e65388a2d0f938/planning/load?format=json')
+        r = requests.get('https://intra.epitech.eu/auth-d73b3db1c918b7826c565155d5e65388a2d0f938/planning/load?format=json', cookies={"language": "fr"})
         planning = r.json()
         now = timezone.now()
         week = []
@@ -32,7 +32,13 @@ class Command(BaseCommand):
                 Log(level=2, log_from="Get Planning - Get room", log_message="Room " + evt['room']["code"].split('/')[-1] + " not found for event:\n" + json.dumps(evt, indent=4, separators=(',', ': '))).save()
             if room:
                 try:
-                    Booking(room=room, description=evt["acti_title"], start=datetime.strptime(evt["start"], "%Y-%m-%d %H:%M:%S"), end=datetime.strptime(evt["end"], "%Y-%m-%d %H:%M:%S")).save()
+                    nb_student = 0
+                    if evt["type_code"] == "rdv":
+                        nb_student = evt["nb_group"]
+                    else:
+                        nb_student = evt["total_students_registered"]
+                    print(evt["acti_title"])
+                    Booking(room=room, description=evt["titlemodule"].split('-')[0] + " - " + evt["acti_title"], start=datetime.strptime(evt["start"], "%Y-%m-%d %H:%M:%S"), end=datetime.strptime(evt["end"], "%Y-%m-%d %H:%M:%S"), registered=nb_student).save()
                 except:
                     Log(level=2, log_from="Get Planning - save Event", log_message="Event error for event:\n" + json.dumps(evt, indent=4, separators=(',', ': '))).save()
-        Log(level=0, log_from="Get Planning", log_message="Planning refresh done").save()
+        Log(level=0, log_from="Get Planning", log_message="Planning refresh done").save()        

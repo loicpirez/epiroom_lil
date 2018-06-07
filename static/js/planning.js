@@ -23,6 +23,11 @@ var createCard = function(data, room) {
   percent = (!rooms[room]) ? 100 : rooms[room]['percent']
   let intl = new Intl.NumberFormat("arab", {minimumIntegerDigits: 2});
   time = (!rooms[room]) ? "Toute la journée" : rooms[room]["time"].split('.')[0]
+  seats = ""
+  if (rooms[room] && acti) { 
+      registered = rooms[room]["course"]["registered"]
+      seats = " [ " + registered + " / " + rooms[room]["seats"] + " ]"
+  }
   if (time != "Toute la journée") {
     let dt = new Date()
     let time_s = time.split(':')
@@ -38,7 +43,7 @@ var createCard = function(data, room) {
       time = "<div class='text-center'>Toute la journée</div>"
   card = $("<div class='col-12 card-box'>\
               <div class='card text-white bg-" + state + "'>\
-                <div class='card-header'><b style='display: inline-block; width: 80%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>" + room.toTitleCase() + "</b></div>\
+                <div class='card-header'><b style='display: inline-block; width: 80%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>" + room.toTitleCase() + seats + "</b></div>\
                 <div class='card-body'>\
                   <b style='text-align: center; display: inline-block; width: 100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>" + acti.toTitleCase() + "</b>" + 
     	            (alwaysfree(time) ? "" : "<div class='progress' style='margin-bottom: 5px; background: none; border: 1px solid #fff; height: 10px'>\

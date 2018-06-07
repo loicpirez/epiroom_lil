@@ -96,8 +96,9 @@ def dispo(req, room=None):
                         ret[r] = {
                             'taken': taken,
                             'time': str(time),
-                            'course': list(acti.values('id', 'user__name', 'description', 'start', 'end'))[0],
-                            'percent': percent
+                            'course': list(acti.values('id', 'user__name', 'description', 'start', 'end', 'registered'))[0],
+                            'percent': percent,
+                            'seats': acti[0].room.seats
                         }
     sorted_room = sorted(ret, key=lambda d:get_dic_value(ret[d], 'taken'), reverse=False)
     rooms = {}

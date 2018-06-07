@@ -18,6 +18,7 @@ class Room(models.Model):
     show = models.BooleanField(default=True)
     bookable = models.BooleanField(default=True)
     svg_ids = models.CharField(max_length=128, null=True, blank=True)
+    seats = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name + (" | Show" if self.show else "") + (" | Bookable" if self.bookable else "")
@@ -28,6 +29,7 @@ class Booking(models.Model):
     description = models.CharField(max_length=128, blank=True, null=True)
     start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField(default=timezone.now)
+    registered = models.IntegerField(default=0)
 
     def __str__(self):
         return self.room.name + " " + (self.user.name if self.user else self.description) + " " + str(self.start) + " " + str(self.end)
