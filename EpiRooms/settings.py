@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'qf%47a8eud9_$ne*ytg1^&yd(zy_ya(x9y#$p8$jmre_e+g!t*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'https://gberdeaux.alwaysdata.net/']
 
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'EpiRooms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/gberdeaux/EpiRooms/templates'],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,7 +90,7 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/home/gberdeaux/EpiRooms_cache',
+        'LOCATION': os.path.join(BASE_DIR, "cache")
     }
 }
 

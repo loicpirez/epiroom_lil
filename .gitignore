@@ -11,3 +11,5 @@ local_settings.py
 
 ### Python ###
 *.py[cod]
+venv
+cache
