@@ -62,6 +62,10 @@ svg {
   background: #27ae60;
 }
 
+.bg-info {
+    background: #007bff;
+}
+
 .col1, .col2 {
   margin-top: 20px
 }

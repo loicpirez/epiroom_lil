@@ -30,6 +30,7 @@ class Booking(models.Model):
     start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField(default=timezone.now)
     registered = models.IntegerField(default=0)
+    manual = models.BooleanField(default=False)
 
     def __str__(self):
         return self.room.name + " " + (self.user.name if self.user else self.description) + " " + str(self.start) + " " + str(self.end)

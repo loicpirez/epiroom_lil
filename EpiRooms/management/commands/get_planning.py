@@ -11,7 +11,7 @@ from django.db import transaction
 class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
-        r = requests.get('https://intra.epitech.eu/auth-d73b3db1c918b7826c565155d5e65388a2d0f938/planning/load?format=json', cookies={"language": "fr"})
+        r = requests.get('https://intra.epitech.eu/auth-682f1715ee74414147049b38959384f951627e06/planning/load?format=json', cookies={"language": "fr"})
         planning = r.json()
         now = timezone.now()
         week = []
@@ -23,7 +23,7 @@ class Command(BaseCommand):
             if "acti_title" in evt and "room" in evt and evt["room"] and "code" in evt["room"] and evt["room"]["code"].startswith(city):
                 week.append(evt)
         week = sorted(week, key=lambda k: k['start'], reverse=False)
-        Booking.objects.all().delete()
+        Booking.objects.filter(manual=False).delete()
         for evt in week:
             room = None
             try:
