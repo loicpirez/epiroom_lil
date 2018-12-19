@@ -62,11 +62,13 @@ var createCard = function(data, room) {
 var setRoom = function(data, room, taken) {
   var rooms = data['rooms']
   var date = null
-  fill_color = ["#27ae60", "#ffb300", "#e74c3c"]
-  createCard(data, room)
-    console.log(room, taken);
+  fill_color = ["#27ae60", "#ffb300", "#e74c3c", "17A2B8"]
+    createCard(data, room)
+  console.log(room, taken);
   if (taken == 0.1)
       taken = 0
+  if (rooms[room] && rooms[room]['registered'] == 0)
+      taken = 1.5
   $('#svg svg #' + room).css('fill', fill_color[taken * 2])
 }
 

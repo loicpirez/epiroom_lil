@@ -96,6 +96,7 @@ def dispo(req, room=None):
                         ret[r] = {
                             'taken': taken,
                             'time': str(time),
+                            'registered': acti.first().registered,
                             'course': list(acti.values('id', 'user__name', 'description', 'start', 'end', 'registered'))[0],
                             'percent': percent,
                             'seats': acti[0].room.seats
