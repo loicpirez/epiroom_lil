@@ -21,7 +21,7 @@ from . import views
 
 urlpatterns = [
     url(r'^cmd$', views.cmd),
-    url(r'^epiroom/$', views.index),
+    url(r'^$', views.index),
     url(r'^api/', include('Api.urls')),
     url(r'^superadmin/', admin.site.urls),
     url(r'^admin/', include('Admin.urls')),

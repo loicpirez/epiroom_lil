@@ -5,6 +5,7 @@ from Api.models import Room
 from .models import GlobalVar
 import json
 from EpiRooms.settings import BASE_DIR
+import uuid 
 
 import os
 
@@ -39,6 +40,7 @@ def cmd(req):
         c.value = ""
         c.save()
     return JsonResponse({
-        "id": req.META['HTTP_X_REAL_IP'],
+        "id": "", #req.META['HTTP_X_REAL_IP'],
+        "test": uuid.uuid1(),
         "cmd": value
-    })
+    }, safe=False)
