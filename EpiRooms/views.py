@@ -30,3 +30,15 @@ def index(req):
         next(svg_file)
         svg = svg_file.read()
     return render(req, 'index.html', locals())
+
+
+def cmd(req):
+    c = GlobalVar.objects.filter(name__startswith="cmd_", name__contains="").first()
+    value = c.value if c else ""
+    if c:
+        c.value = ""
+        c.save()
+    return JsonResponse({
+        "id": req.META['HTTP_X_REAL_IP'],
+        "cmd": value
+    })

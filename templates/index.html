@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <link rel="manifest" href="file/manifest.json">
-    {% if refresh %}<meta http-equiv="refresh" content="{{ refresh }}">{% endif %}
+    <!--{% if refresh %}<meta http-equiv="refresh" content="{{ refresh }}">{% endif %}-->
     <style>
       .card .card-body {
         font-size: 23px!important;
@@ -25,7 +25,7 @@
         height: calc((100vh - 20px) / {{ max_col }} - 20px);
       }
       #svg svg {
-        transform: rotate(90deg);
+        #transform: rotate(90deg);
       }
       .card-header {
         padding: .75rem 1.25rem 0.2rem;
@@ -45,6 +45,7 @@
     </div>
     <div id="reload" class="to-front fixed"><i class="fas fa-spinner fa-spin text-white"></i></div>
     <div id="hour" inc="1" class="to-front fixed"></div>
+    <div id="id_cmd" style="position: fixed; bottom: 0px; right: 5px; color: dark-grey"></div>
     <div class="container-fluid">
       <div class="row">
         <div class="side_col col-md-3 d-none d-md-block"><div class="col1 row"></div></div>

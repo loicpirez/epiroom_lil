@@ -20,6 +20,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+    url(r'^cmd$', views.cmd),
     url(r'^epiroom/$', views.index),
     url(r'^api/', include('Api.urls')),
     url(r'^superadmin/', admin.site.urls),

@@ -8,10 +8,16 @@ from EpiRooms.models import Log, GlobalVar
 
 from django.db import transaction
 
+autologin = "auth-e82f0ae1040c991bd2febe47ce663f245f603638"
+
 class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
-        r = requests.get('https://intra.epitech.eu/auth-682f1715ee74414147049b38959384f951627e06/planning/load?format=json', cookies={"language": "fr"})
+        day = timezone.now().date()
+        start = "%d-%d-%d" % (day.year, day.month, day.day)
+        tomorrow = timezone.now().date() + timedelta(days=1)
+        end = "%d-%d-%d" % (tomorrow.year, tomorrow.month, tomorrow.day)
+        r = requests.get('https://intra.epitech.eu/' + autologin + '/planning/load?format=json&start=' + start + '&end=' + end, cookies={"language": "fr"})
         planning = r.json()
         now = timezone.now()
         week = []

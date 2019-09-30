@@ -75,7 +75,7 @@ def dispo(req, room=None):
     for room in rooms:
         svg_room = room.svg_ids.split(';')
         for r in svg_room:
-            if Room.objects.filter(name__icontains=r, show=True).count():
+            if Room.objects.filter(svg_ids__icontains=r, show=True).count():
                 if not r in ret:
                     ret[r] = None
                 tomorrow = datetime(year=now.year, month=now.month, day=now.day) + timedelta(days=1)
@@ -93,15 +93,20 @@ def dispo(req, room=None):
                             percent = 100 - int(time.total_seconds() / (acti[0].end.timestamp() - acti[0].start.timestamp()) * 100)
                         elif taken == 0.5:
                             percent = int(time.total_seconds() / 60) / 60 * 100
+                        tmp = rooms.filter(svg_ids__iexact=r).first()
                         ret[r] = {
+                            'name': room.name,
                             'taken': taken,
+                            'end': end_time,
                             'time': str(time),
                             'registered': acti.first().registered,
                             'course': list(acti.values('id', 'user__name', 'description', 'start', 'end', 'registered'))[0],
                             'percent': percent,
-                            'seats': acti[0].room.seats
+                            'seats': acti[0].room.seats,
+                            'test': (1 - taken) * percent
                         }
-    sorted_room = sorted(ret, key=lambda d:get_dic_value(ret[d], 'taken'), reverse=False)
+    tmp = sorted(ret, key=lambda d:get_dic_value(ret[d], 'test'), reverse=True)
+    sorted_room = list(filter(lambda x: not ret[x], tmp)) + list(filter(lambda x: ret[x], tmp))
     rooms = {}
     for room in sorted_room:
         rooms[room] = ret[room]

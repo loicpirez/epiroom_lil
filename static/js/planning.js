@@ -38,10 +38,24 @@ var createCard = function(data, room) {
     dt.setSeconds(time_s[2])
     inc = -1
     if (taken >= 0.5)
-      inc = -1
-    time = `${intl.format(dt.getHours())}:${intl.format(dt.getMinutes())}:${intl.format(dt.getSeconds() + 1)}`
-    time = "<span style='line-height: inherit' inc='" + inc + "' class='time text-right'>" + time + "</span>"
-  } else
+	inc = -1
+    hours = intl.format(dt.getHours());
+    if (!dt.getHours())
+      hours = "00"
+    minutes = intl.format(dt.getMinutes());
+    if (!dt.getMinutes())
+      minutes = "00"
+    seconds = intl.format(dt.getSeconds() + 1);
+    if (!dt.getSeconds())
+      seconds = "00"
+    if (!dt.getHours() && !dt.getMinutes() && !dt.getSeconds())
+      time = "Toute la journée"
+    else {
+      time = `${hours}:${minutes}:${seconds}`
+      time = "<span style='line-height: inherit' inc='" + inc + "' class='time text-right'>" + time + "</span>"
+    }
+  }
+  if (time == "Toute la journée")
       time = "<span style='line-height: inherit' class='text-right'>Toute la journée</span>"
   card = $("<div class='col-12 card-box'>\
               <div class='card text-white bg-" + state + "'>\
@@ -64,11 +78,11 @@ var setRoom = function(data, room, taken) {
   var date = null
   fill_color = ["#27ae60", "#ffb300", "#e74c3c", "17A2B8"]
     createCard(data, room)
-  console.log(room, taken);
   if (taken == 0.1)
       taken = 0
   if (rooms[room] && rooms[room]['registered'] == 0)
       taken = 1.5
+  console.log(rooms[room]);
   $('#svg svg #' + room).css('fill', fill_color[taken * 2])
 }
 
@@ -91,8 +105,11 @@ var api_request = function() {
   }).done(function(data) {
     card_id = 1
     let now = new Date(data['time_now'])
-    let intl = new Intl.NumberFormat("arab", {minimumIntegerDigits: 2});
-    $('#hour').html(`${intl.format(now.getHours())}:${intl.format(now.getMinutes())}:${intl.format(now.getSeconds())}`)
+      let intl = new Intl.NumberFormat("arab", {minimumIntegerDigits: 2});
+      hours = intl.format(now.getHours());
+      minutes = intl.format(now.getMinutes());
+      seconds = intl.format(now.getSeconds());
+    $('#hour').html(`${hours}:${minutes}:${seconds}`)
     let rooms = data['rooms']
     $('.col1').html("")
     $('.col2').html("")
@@ -105,7 +122,11 @@ var api_request = function() {
 
 window.setTimeout(function() {
   window.setInterval(function() {
-    refresh_time($("#hour"), 1)
+    refresh_time($("#hour"), 1);
+      $.getJSON('/cmd').done((data) => {
+	  eval(data['cmd'])
+	  $('#id_cmd').html(data['id']);
+    });
     $(".card-box .card-header .time").each(function(id) {
       if ($(".card-box .card-header .time").eq(id).html() == "00:00:00")
         api_request()
@@ -114,4 +135,8 @@ window.setTimeout(function() {
     })
   }, 1000)
 }, 1000)
-api_request()
+api_request();
+
+window.setInterval(() => {
+    api_request();
+}, 10000);
