@@ -1,14 +1,14 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 from datetime import datetime, timedelta
-import requests, json
+import requests, json, os
 
 from Api.models import Booking, Room
 from EpiRooms.models import Log, GlobalVar
 
 from django.db import transaction
 
-autologin = "auth-e82f0ae1040c991bd2febe47ce663f245f603638"
+autologin = os.environ['INTRA_AUTH']
 
 class Command(BaseCommand):
     @transaction.atomic

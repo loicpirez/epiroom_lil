@@ -4,6 +4,8 @@ services:
   django:
     build: .
     container_name: epirooms
+    environment:
+      - INTRA_AUTH=auth-e82f0ae1040c991bd2febe47ce663f245f603638
     command: python3 manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
